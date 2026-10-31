@@ -31,7 +31,9 @@ jobs:
           for f in Path('checksums').rglob('*.txt'):
               for line in f.read_text().splitlines():
                   digest, filename = line.split(maxsplit=1)
-                  name = Path(filename.strip().lstrip('*')).name
+                  name = Path(filename.strip().lstrip('*').replace(chr(92), '/')).name
+                  digest = digest.lstrip(chr(92))
+                  assert len(digest) == 64, digest
                   assert name not in expected, name
                   expected[name] = digest
           dest = Path('release'); dest.mkdir()
