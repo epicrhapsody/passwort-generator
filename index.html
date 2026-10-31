@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Passwortgenerator</title></head>
+<body><main>
+<section class="card" aria-label="Passwortgenerator"><label for="password">Passwort</label><div class="result"><input id="password" readonly spellcheck="false" autocomplete="off" aria-label="Generiertes Passwort"><button id="copy" disabled>Kopieren</button></div>
+<div class="length"><label for="length">Länge</label><output id="length-value" for="length">20</output></div><input type="range" id="length" min="8" max="128" value="20">
+<fieldset><legend>Zeichen</legend><label><input type="checkbox" id="lowercase" checked>Kleinbuchstaben</label><label><input type="checkbox" id="uppercase" checked>Großbuchstaben</label><label><input type="checkbox" id="digits" checked>Zahlen</label><label><input type="checkbox" id="symbols" checked>Sonderzeichen</label></fieldset>
+<label class="exclude"><input type="checkbox" id="exclude">Ähnliche Zeichen ausschließen</label>
+<button class="primary" id="generate">Generieren <span aria-hidden="true">↻</span></button><p id="status" role="status" aria-live="polite"></p></section></main><script type="module" src="/src/main.js"></script></body></html>

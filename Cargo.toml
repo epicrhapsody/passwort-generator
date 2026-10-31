@@ -1,0 +1,3 @@
+[workspace]
+members = ["crates/password-core", "src-tauri"]
+resolver = "2"

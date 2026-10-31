@@ -1,0 +1,22 @@
+{
+  "name": "passwort-generator",
+  "version": "1.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
+    "build": "vite build",
+    "tauri": "tauri",
+    "test": "node tests/frontend.test.js"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-clipboard-manager": "^2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "vite": "^7"
+  },
+  "author": "Karsten vom Wege",
+  "license": "MIT"
+}
