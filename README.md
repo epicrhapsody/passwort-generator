@@ -46,7 +46,7 @@ Technische Referenzen: [Tauri-Projektaufbau](https://v2.tauri.app/start/create-p
 
 ## Automatische Installer-Builds
 
-Den Inhalt dieses Projektordners als Wurzel eines GitHub-Repositories verwenden. `.github/workflows/build.yml` baut bei Push auf `main`, bei Pull Requests oder manuell über „Actions → Desktop installers → Run workflow“ auf Ubuntu 22.04, Windows sowie macOS für Apple Silicon und Intel. Die Installer liegen danach als Workflow-Artefakte vor. Es wird kein Release veröffentlicht. macOS verwendet eine lokale Ad-hoc-Signatur; eine Apple-Developer-Signatur und Notarisierung sind damit nicht enthalten. Alle vier Plattform-Builds sind erfolgreich. [Installer und Prüfsummen](https://github.com/epicrhapsody/epicrhapsody/actions/runs/41245374394).
+Den Inhalt dieses Projektordners als Wurzel eines GitHub-Repositories verwenden. `.github/workflows/build.yml` baut bei Push auf `main`, bei Pull Requests oder manuell über „Actions → Desktop installers → Run workflow“ auf Ubuntu 22.04, Windows sowie macOS für Apple Silicon und Intel. Die Installer liegen danach als Workflow-Artefakte vor. Es wird kein Release veröffentlicht. macOS verwendet eine lokale Ad-hoc-Signatur; eine Apple-Developer-Signatur und Notarisierung sind damit nicht enthalten. Alle vier Plattform-Builds sind erfolgreich. [Installer und Prüfsummen](https://github.com/epicrhapsody/passwort-generator/actions/runs/41245374394).
 
 Für ältere Ubuntu-Versionen sollten die dort erzeugten Linux-Pakete verwendet werden: Ein lokal auf einem neueren Ubuntu gebautes Binary kann neuere Systembibliotheken voraussetzen.
 
