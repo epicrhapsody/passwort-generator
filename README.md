@@ -48,7 +48,7 @@ Technische Referenzen: [Tauri-Projektaufbau](https://v2.tauri.app/start/create-p
 
 ## Automatische Installer-Builds
 
-Den Inhalt dieses Projektordners als Wurzel eines GitHub-Repositories verwenden. `.github/workflows/build.yml` baut bei Push auf `main`, bei Pull Requests oder manuell über „Actions → Desktop installers → Run workflow“ auf Ubuntu 22.04, Windows sowie macOS für Apple Silicon und Intel. Die Installer liegen danach als Workflow-Artefakte vor. Version 1.0.1 ist zusätzlich als öffentliches GitHub-Release verfügbar. macOS verwendet eine lokale Ad-hoc-Signatur; eine Apple-Developer-Signatur und Notarisierung sind damit nicht enthalten. Alle vier Plattform-Builds sind erfolgreich. [Installer und Prüfsummen](https://github.com/epicrhapsody/passwort-generator/actions/runs/41245374394).
+Den Inhalt dieses Projektordners als Wurzel eines GitHub-Repositories verwenden. `.github/workflows/build.yml` baut bei Push auf `main`, bei Pull Requests oder manuell über „Actions → Desktop installers → Run workflow“ auf Ubuntu 22.04, Windows sowie macOS für Apple Silicon. Die Installer liegen danach als Workflow-Artefakte vor. Version 1.0.1 ist zusätzlich als öffentliches GitHub-Release verfügbar. macOS verwendet eine lokale Ad-hoc-Signatur; eine Apple-Developer-Signatur und Notarisierung sind damit nicht enthalten. Alle drei Plattform-Builds sind erfolgreich. [Installer und Prüfsummen](https://github.com/epicrhapsody/passwort-generator/actions/runs/41245374394).
 
 Für ältere Ubuntu-Versionen sollten die dort erzeugten Linux-Pakete verwendet werden: Ein lokal auf einem neueren Ubuntu gebautes Binary kann neuere Systembibliotheken voraussetzen.
 
@@ -58,7 +58,7 @@ Frontend-Tests prüfen Kopieren auf Benutzeraktion, Fehlerbehandlung und das Ver
 
 ## Lokal geprüft (31.10.2026)
 
-Ubuntu 26.04 x86_64: Version 1.0.1: Release-Build und Bundling als DEB und AppImage erfolgreich, DEB-Paketmetadaten geprüft. Die native Release-App lief beim Starttest acht Sekunden ohne Fehlermeldung und wurde anschließend gezielt beendet. Dies ist ein Starttest, kein vollständiger manueller Bedienungstest. Zwei Rust-Tests und fünf Frontend-Tests bestehen. Windows x64 sowie macOS Intel und Apple Silicon wurden ebenfalls erfolgreich auf GitHub gebaut. Manuelle Installationstests auf Windows und macOS stehen aus.
+Ubuntu 26.04 x86_64: Version 1.0.1: Release-Build und Bundling als DEB und AppImage erfolgreich, DEB-Paketmetadaten geprüft. Die native Release-App lief beim Starttest acht Sekunden ohne Fehlermeldung und wurde anschließend gezielt beendet. Dies ist ein Starttest, kein vollständiger manueller Bedienungstest. Zwei Rust-Tests und fünf Frontend-Tests bestehen. Windows x64 sowie macOS Apple Silicon wurden ebenfalls erfolgreich auf GitHub gebaut. Manuelle Installationstests auf Windows und macOS stehen aus.
 
 Plattformspezifische Build-Befehle: [BUILD.md](BUILD.md). Das finale Schlüssel-Icon liegt als SVG in `branding/icon.svg` und als PNG/ICO/ICNS in `src-tauri/icons/`.
 
@@ -71,3 +71,5 @@ Die AppStream-Prüfung besteht mit einem verbleibenden Hinweis auf die fehlende 
 Das Ubuntu App Center zeigt beim Öffnen lokaler DEB-Dateien im geprüften Quellcode weder Herausgeber noch Paket-Icon an und wertet hierfür die AppStream-Datei nicht aus. Die Drittanbieter-Warnung bleibt ebenfalls bestehen. Diese Anzeige bestätigt keinen Fehler im Maintainer-Feld; dieses enthält Karsten vom Wege. Auch die Lizenzanzeige des lokalen Installationsdialogs kann weiterhin „unknown“ lauten. Nach Installation liegt das Icon im regulären Anwendungsmenü vor.
 
 Geprüfter App-Center-Quellcode: https://github.com/ubuntu/app-center/blob/775751f5c12cfbf1f1f9a3f8aadda945e1ef73aa/packages/app_center/lib/widgets/app_title.dart
+
+macOS wird ausschließlich für Apple Silicon (ARM64) angeboten.
