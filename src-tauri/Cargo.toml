@@ -1,0 +1,15 @@
+[package]
+name = "passwort-generator"
+version = "1.0.1"
+edition = "2021"
+authors = ["Karsten vom Wege"]
+license = "MIT"
+description = "Einfacher lokaler Passwortgenerator"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-clipboard-manager = "2"
+password-core = { path = "../crates/password-core" }

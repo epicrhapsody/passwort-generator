@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Passwortgenerator",
+  "version": "1.0.1",
+  "identifier": "de.karsten.passwortgenerator",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Passwortgenerator",
+        "width": 660,
+        "height": 560,
+        "minWidth": 360,
+        "minHeight": 520
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' asset: data:; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.ico",
+      "icons/icon.icns"
+    ],
+    "publisher": "Karsten vom Wege",
+    "shortDescription": "Einfacher lokaler Passwortgenerator",
+    "category": "Utility",
+    "license": "MIT",
+    "licenseFile": "../LICENSE",
+    "linux": {
+      "deb": {
+        "section": "utils",
+        "files": {
+          "/usr/share/metainfo/de.karsten.passwortgenerator.metainfo.xml": "linux/de.karsten.passwortgenerator.metainfo.xml",
+          "/usr/share/doc/passwortgenerator/copyright": "linux/copyright"
+        }
+      }
+    }
+  }
+}
