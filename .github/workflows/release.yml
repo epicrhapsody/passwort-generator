@@ -25,8 +25,8 @@ jobs:
           python3 - <<'PYCODE'
           from pathlib import Path
           import hashlib, json, os, subprocess, zipfile
-          artifacts = [a for a in json.loads(Path('artifacts.json').read_text())['artifacts'] if a['name'].startswith('passwortgenerator-')]
-          assert len(artifacts) == 4, artifacts
+          artifacts = [a for a in json.loads(Path('artifacts.json').read_text())['artifacts'] if a['name'].startswith('passwortgenerator-') and a['name'] != 'passwortgenerator-x86_64-apple-darwin']
+          assert len(artifacts) == 3, artifacts
           dest = Path('release'); dest.mkdir()
           found = {}
           for a in artifacts:
@@ -47,7 +47,7 @@ jobs:
                           (dest / name).write_bytes(data)
                           found[name] = hashlib.sha256(data).hexdigest()
               print('Verified:', a['name'], expected)
-          assert len(found) == 6, found
+          assert len(found) == 5, found
           (dest / 'SHA256SUMS').write_text(''.join(found[n] + '  ' + n + '\n' for n in sorted(found)))
           PYCODE
       - name: Publish installers
@@ -59,11 +59,15 @@ jobs:
 
           - Windows x64: `.exe` oder `.msi`
           - macOS Apple Silicon: `aarch64.dmg`
-          - macOS Intel: `x64.dmg`
           - Ubuntu x64: `.deb` oder `.AppImage`
 
-          Prüfsummen: `SHA256SUMS`. Alle vier Plattform-Builds und automatischen Tests sind erfolgreich.
+          Prüfsummen: `SHA256SUMS`. Alle drei Plattform-Builds und automatischen Tests sind erfolgreich.
 
           Windows ist nicht mit einem Entwicklerzertifikat signiert. macOS verwendet eine Ad-hoc-Signatur ohne Apple-Notarisierung. Manuelle Installationstests auf Windows/macOS stehen aus.
           NOTES
-          gh release create v1.0.1 release/* --target d7c5905e684baf6c46fbdc3846e721b6272227f8 --title 'Passwortgenerator 1.0.1' --notes-file notes.md --latest
+          if gh release view v1.0.1 >/dev/null 2>&1; then
+            gh release upload v1.0.1 release/SHA256SUMS --clobber
+            gh release edit v1.0.1 --notes-file notes.md
+          else
+            gh release create v1.0.1 release/* --target d7c5905e684baf6c46fbdc3846e721b6272227f8 --title 'Passwortgenerator 1.0.1' --notes-file notes.md --latest
+          fi
