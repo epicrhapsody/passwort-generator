@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 
 const source = readFileSync(new URL('../src/main.js', import.meta.url), 'utf8')
-  .replace(/^import .*;\n/gm, '');
+  .replace(/^import .*;\r?\n/gm, '');
 const tick = () => new Promise(resolve => setImmediate(resolve));
 function setup(invoke, writeText = async () => {}, desktop = true) {
   const elements = new Map();
