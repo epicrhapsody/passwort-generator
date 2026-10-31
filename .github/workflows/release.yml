@@ -1,0 +1,65 @@
+name: Publish release 1.0.1
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-v1.0.1
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Check successful source build
+        run: |
+          test "$(gh run view 41245374394 --json conclusion --jq .conclusion)" = success
+          test "$(gh run view 41245374394 --json headSha --jq .headSha)" = d7c5905e684baf6c46fbdc3846e721b6272227f8
+      - name: Download tested installers and checksums
+        run: |
+          gh run download 41245374394 --pattern 'passwortgenerator-*' --dir downloads
+          gh run download 41245374394 --pattern 'checksums-*' --dir checksums
+      - name: Verify and prepare release files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, shutil
+          expected = {}
+          for f in Path('checksums').rglob('*.txt'):
+              for line in f.read_text().splitlines():
+                  digest, filename = line.split(maxsplit=1)
+                  name = Path(filename.strip().lstrip('*')).name
+                  assert name not in expected, name
+                  expected[name] = digest
+          dest = Path('release'); dest.mkdir()
+          found = set()
+          for f in Path('downloads').rglob('*'):
+              if f.is_file() and f.suffix in {'.exe', '.msi', '.dmg', '.deb', '.AppImage'}:
+                  assert f.name not in found, f.name
+                  assert hashlib.sha256(f.read_bytes()).hexdigest() == expected[f.name], f.name
+                  shutil.copy2(f, dest / f.name)
+                  found.add(f.name)
+          assert len(found) == 6, found
+          assert found == set(expected), (found, expected)
+          (dest / 'SHA256SUMS').write_text(''.join(expected[n] + '  ' + n + '\n' for n in sorted(found)))
+          PY
+      - name: Publish installers
+        run: |
+          cat > notes.md <<'NOTES'
+          Herausgeber: **Karsten vom Wege** · Lizenz: **MIT**
+
+          Passwortgenerator für Windows, macOS und Ubuntu.
+
+          - Windows x64: `.exe` oder `.msi`
+          - macOS Apple Silicon: `aarch64.dmg`
+          - macOS Intel: `x64.dmg`
+          - Ubuntu x64: `.deb` oder `.AppImage`
+
+          Prüfsummen: `SHA256SUMS`. Alle vier Plattform-Builds und automatischen Tests sind erfolgreich.
+
+          Windows ist nicht mit einem Entwicklerzertifikat signiert. macOS verwendet eine Ad-hoc-Signatur ohne Apple-Notarisierung. Manuelle Installationstests auf Windows/macOS stehen aus.
+          NOTES
+          gh release create v1.0.1 release/* --target d7c5905e684baf6c46fbdc3846e721b6272227f8 --title 'Passwortgenerator 1.0.1' --notes-file notes.md --latest
