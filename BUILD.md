@@ -13,4 +13,6 @@ Die Systemvoraussetzungen stehen in der README. Alle Befehle im Projektordner au
 
 Installer: `target/release/bundle/`. Signierung mit Entwicklerzertifikat und macOS-Notarisierung sind nicht konfiguriert. Die macOS-Ad-hoc-Signatur bestätigt keine Herausgeberidentität.
 
-Alternativ baut `.github/workflows/build.yml` alle vier Ziele, sobald der Quellcode als eigenes GitHub-Repository vorliegt. Zielrepository: https://github.com/epicrhapsody/epicrhapsody. Der Workflow wurde noch nicht ausgeführt. Die Windows- und macOS-Installer sind daher noch nicht gebaut oder getestet.
+Alternativ baut `.github/workflows/build.yml` alle vier Ziele, sobald der Quellcode als eigenes GitHub-Repository vorliegt. Zielrepository: https://github.com/epicrhapsody/epicrhapsody. Alle vier Plattform-Builds sind erfolgreich; manuelle Installationstests auf Windows und macOS stehen aus.
+
+[Installer-Downloads und Prüfsummen](https://github.com/epicrhapsody/epicrhapsody/actions/runs/41245374394)
