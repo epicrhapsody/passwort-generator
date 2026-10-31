@@ -1,0 +1,10 @@
+[package]
+name = "password-core"
+version = "1.0.1"
+edition = "2021"
+authors = ["Karsten vom Wege"]
+license = "MIT"
+
+[dependencies]
+getrandom = "0.2"
+serde = { version = "1", features = ["derive"] }
