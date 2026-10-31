@@ -16,3 +16,5 @@ Installer: `target/release/bundle/`. Signierung mit Entwicklerzertifikat und mac
 Alternativ baut `.github/workflows/build.yml` alle vier Ziele, sobald der Quellcode als eigenes GitHub-Repository vorliegt. Zielrepository: https://github.com/epicrhapsody/passwort-generator. Alle vier Plattform-Builds sind erfolgreich; manuelle Installationstests auf Windows und macOS stehen aus.
 
 [Installer-Downloads und Prüfsummen](https://github.com/epicrhapsody/passwort-generator/actions/runs/41245374394)
+
+[Öffentliche Installer-Downloads ohne GitHub-Anmeldung](https://github.com/epicrhapsody/passwort-generator/releases/tag/v1.0.1). Die Veröffentlichung übernimmt die gebauten Originalarchive nach SHA-256-Prüfung; der manuell ausführbare Workflow liegt in `.github/workflows/release.yml`.

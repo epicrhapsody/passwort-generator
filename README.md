@@ -2,6 +2,8 @@
 
 Herausgeber: Karsten vom Wege
 
+**[Installationsdateien für Windows, macOS und Ubuntu herunterladen](https://github.com/epicrhapsody/passwort-generator/releases/tag/v1.0.1)**
+
 Kleine Desktop-App mit Rust und Tauri 2 für Windows, macOS und Ubuntu. Deutsche Oberfläche, 8–128 Zeichen, wählbare Zeichenarten, Ausschluss ähnlicher Zeichen und Kopierfunktion. Keine Speicherung, Telemetrie oder Netzwerkaufrufe der Anwendung.
 
 ## Entwicklung
@@ -46,7 +48,7 @@ Technische Referenzen: [Tauri-Projektaufbau](https://v2.tauri.app/start/create-p
 
 ## Automatische Installer-Builds
 
-Den Inhalt dieses Projektordners als Wurzel eines GitHub-Repositories verwenden. `.github/workflows/build.yml` baut bei Push auf `main`, bei Pull Requests oder manuell über „Actions → Desktop installers → Run workflow“ auf Ubuntu 22.04, Windows sowie macOS für Apple Silicon und Intel. Die Installer liegen danach als Workflow-Artefakte vor. Es wird kein Release veröffentlicht. macOS verwendet eine lokale Ad-hoc-Signatur; eine Apple-Developer-Signatur und Notarisierung sind damit nicht enthalten. Alle vier Plattform-Builds sind erfolgreich. [Installer und Prüfsummen](https://github.com/epicrhapsody/passwort-generator/actions/runs/41245374394).
+Den Inhalt dieses Projektordners als Wurzel eines GitHub-Repositories verwenden. `.github/workflows/build.yml` baut bei Push auf `main`, bei Pull Requests oder manuell über „Actions → Desktop installers → Run workflow“ auf Ubuntu 22.04, Windows sowie macOS für Apple Silicon und Intel. Die Installer liegen danach als Workflow-Artefakte vor. Version 1.0.1 ist zusätzlich als öffentliches GitHub-Release verfügbar. macOS verwendet eine lokale Ad-hoc-Signatur; eine Apple-Developer-Signatur und Notarisierung sind damit nicht enthalten. Alle vier Plattform-Builds sind erfolgreich. [Installer und Prüfsummen](https://github.com/epicrhapsody/passwort-generator/actions/runs/41245374394).
 
 Für ältere Ubuntu-Versionen sollten die dort erzeugten Linux-Pakete verwendet werden: Ein lokal auf einem neueren Ubuntu gebautes Binary kann neuere Systembibliotheken voraussetzen.
 
