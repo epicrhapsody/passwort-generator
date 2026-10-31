@@ -18,36 +18,38 @@ jobs:
         run: |
           test "$(gh run view 41245374394 --json conclusion --jq .conclusion)" = success
           test "$(gh run view 41245374394 --json headSha --jq .headSha)" = d7c5905e684baf6c46fbdc3846e721b6272227f8
-      - name: Download tested installers and checksums
-        run: |
-          gh run download 41245374394 --pattern 'passwortgenerator-*' --dir downloads
-          gh run download 41245374394 --pattern 'checksums-*' --dir checksums
+      - name: Load verified build artifact metadata
+        run: gh api "repos/$GH_REPO/actions/runs/41245374394/artifacts" > artifacts.json
       - name: Verify and prepare release files
         run: |
-          python3 - <<'PY'
+          python3 - <<'PYCODE'
           from pathlib import Path
-          import hashlib, shutil
-          expected = {}
-          for f in Path('checksums').rglob('*.txt'):
-              for line in f.read_text().splitlines():
-                  digest, filename = line.split(maxsplit=1)
-                  name = Path(filename.strip().lstrip('*').replace(chr(92), '/')).name
-                  digest = digest.lstrip(chr(92))
-                  assert len(digest) == 64, digest
-                  assert name not in expected, name
-                  expected[name] = digest
+          import hashlib, json, os, subprocess, zipfile
+          artifacts = [a for a in json.loads(Path('artifacts.json').read_text())['artifacts'] if a['name'].startswith('passwortgenerator-')]
+          assert len(artifacts) == 4, artifacts
           dest = Path('release'); dest.mkdir()
-          found = set()
-          for f in Path('downloads').rglob('*'):
-              if f.is_file() and f.suffix in {'.exe', '.msi', '.dmg', '.deb', '.AppImage'}:
-                  assert f.name not in found, f.name
-                  assert hashlib.sha256(f.read_bytes()).hexdigest() == expected[f.name], f.name
-                  shutil.copy2(f, dest / f.name)
-                  found.add(f.name)
+          found = {}
+          for a in artifacts:
+              assert not a['expired'], a['name']
+              expected = a['digest']
+              assert expected and expected.startswith('sha256:'), a['name']
+              archive = Path(str(a['id']) + '.zip')
+              with archive.open('wb') as stream:
+                  subprocess.run(['gh', 'api', 'repos/' + os.environ['GH_REPO'] + '/actions/artifacts/' + str(a['id']) + '/zip'], stdout=stream, check=True)
+              actual = 'sha256:' + hashlib.sha256(archive.read_bytes()).hexdigest()
+              assert actual == expected, a['name']
+              with zipfile.ZipFile(archive) as z:
+                  for item in z.infolist():
+                      name = Path(item.filename.replace(chr(92), '/')).name
+                      if not item.is_dir() and Path(name).suffix in {'.exe', '.msi', '.dmg', '.deb', '.AppImage'}:
+                          assert name not in found, name
+                          data = z.read(item)
+                          (dest / name).write_bytes(data)
+                          found[name] = hashlib.sha256(data).hexdigest()
+              print('Verified:', a['name'], expected)
           assert len(found) == 6, found
-          assert found == set(expected), (found, expected)
-          (dest / 'SHA256SUMS').write_text(''.join(expected[n] + '  ' + n + '\n' for n in sorted(found)))
-          PY
+          (dest / 'SHA256SUMS').write_text(''.join(found[n] + '  ' + n + '\n' for n in sorted(found)))
+          PYCODE
       - name: Publish installers
         run: |
           cat > notes.md <<'NOTES'
