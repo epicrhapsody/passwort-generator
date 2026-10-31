@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>de.karsten.passwortgenerator</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Passwortgenerator</name>
+  <summary>Generate random passwords locally</summary>
+  <summary xml:lang="de">Zufällige Passwörter lokal erzeugen</summary>
+  <developer id="de.karsten"><name>Karsten vom Wege</name></developer>
+  <description><p>Generate passwords with adjustable length and character types using the operating system random number generator.</p></description>
+  <launchable type="desktop-id">Passwortgenerator.desktop</launchable>
+  <provides><binary>passwort-generator</binary></provides>
+  <categories><category>Utility</category></categories>
+  <releases><release version="1.0.1" date="2026-10-31"/></releases>
+  <content_rating type="oars-1.1"/>
+</component>
